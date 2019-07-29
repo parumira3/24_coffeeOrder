@@ -13,7 +13,11 @@ namespace _24_coffeeOrder
     public partial class Form1 : Form
     {
         public delegate int delFuncDow_Edge(int i);
-        
+        public delegate int delFuncToppinge(string strOrder,int Ea);
+
+        public delegate T delFunc<T>(T i);
+        public delegate object delFunc(object i); //var, object
+
 
         int _iTotalPrice = 0;
 
@@ -26,6 +30,8 @@ namespace _24_coffeeOrder
         {
             delFuncDow_Edge delgDow = new delFuncDow_Edge(fDow);
             delFuncDow_Edge delgEdge = new delFuncDow_Edge(fEdge);
+
+            delFuncToppinge delTopping = null;
 
             int iDowOrder = 0;
             int iEdgeOrder = 0;
@@ -55,6 +61,19 @@ namespace _24_coffeeOrder
             //delgEdge(iEdgeOrder);
             fCallBackDelegate(iDowOrder, delgDow);
             fCallBackDelegate(iEdgeOrder, delgEdge);
+
+            //if (cboxTopping1.Checked)
+            //{
+            //    delTopping += fTopping1;
+            //}
+            if (cboxTopping1.Checked) delTopping += fTopping1;
+            if (cboxTopping2.Checked) delTopping += fTopping2;
+            if (cboxTopping3.Checked) delTopping += fTopping3;
+
+            delTopping("토핑", (int)numEa.Value);
+
+            flboxOrderRed("------------------------------");
+            flboxOrderRed(string.Format("전체주문가격 {0}원 입니다", _iTotalPrice));
         }
 
 
@@ -133,7 +152,7 @@ namespace _24_coffeeOrder
             string strOrder = string.Empty;
             int iPrice = iEa * 500;
 
-            strOrder = string.Format("소세지 {0} {1} 개를 선택하였습니다. : ({2}원 (1EA 500원)", Order, iEa, iPrice);
+            strOrder = string.Format("소세지 {0} {1} 개를 선택하였습니다. : ({2}원) (1EA 500원)", Order, iEa, iPrice);
             flboxOrderRed(strOrder);
             return _iTotalPrice += iPrice;
         }
@@ -143,7 +162,7 @@ namespace _24_coffeeOrder
             string strOrder = string.Empty;
             int iPrice = iEa * 200;
 
-            strOrder = string.Format("감자 {0} {1} 개를 선택하였습니다. : ({2}원 (1EA 200원)", Order, iEa, iPrice);
+            strOrder = string.Format("감자 {0} {1} 개를 선택하였습니다. : ({2}원) (1EA 200원)", Order, iEa, iPrice);
             flboxOrderRed(strOrder);
             return _iTotalPrice += iPrice;
         }
@@ -153,7 +172,7 @@ namespace _24_coffeeOrder
             string strOrder = string.Empty;
             int iPrice = iEa * 300;
 
-            strOrder = string.Format("치즈 {0} {1} 개를 선택하였습니다. : ({2}원 (1EA 300원)", Order, iEa, iPrice);
+            strOrder = string.Format("치즈 {0} {1} 개를 선택하였습니다. : ({2}원) (1EA 300원)", Order, iEa, iPrice);
             flboxOrderRed(strOrder);
             return _iTotalPrice += iPrice;
         }
