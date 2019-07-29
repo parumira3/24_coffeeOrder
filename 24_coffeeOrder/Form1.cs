@@ -74,8 +74,19 @@ namespace _24_coffeeOrder
 
             flboxOrderRed("------------------------------");
             flboxOrderRed(string.Format("전체주문가격 {0}원 입니다", _iTotalPrice));
+
+            if (fCoffee != null)
+            {
+                fCoffee.Dispose();
+                fCoffee = null;
+
+            }
+
+            fCoffee = new frmCoffee();
+            fCoffee.Show();
         }
 
+        frmCoffee fCoffee;
 
         #region Function
         /// <summary>
