@@ -13,7 +13,7 @@ namespace _24_coffeeOrder
     public partial class Form1 : Form
     {
         public delegate int delFuncDow_Edge(int i);
-        public delegate int delFuncToppinge(string strOrder,int Ea);
+        public delegate int delFuncTopping(string strOrder,int Ea);
 
         public delegate T delFunc<T>(T i);
         public delegate object delFunc(object i); //var, object
@@ -31,7 +31,7 @@ namespace _24_coffeeOrder
             delFuncDow_Edge delgDow = new delFuncDow_Edge(fDow);
             delFuncDow_Edge delgEdge = new delFuncDow_Edge(fEdge);
 
-            delFuncToppinge delTopping = null;
+            delFuncTopping delTopping = null;
 
             int iDowOrder = 0;
             int iEdgeOrder = 0;
@@ -75,18 +75,34 @@ namespace _24_coffeeOrder
             flboxOrderRed("------------------------------");
             flboxOrderRed(string.Format("전체주문가격 {0}원 입니다", _iTotalPrice));
 
-            if (fCoffee != null)
-            {
-                fCoffee.Dispose();
-                fCoffee = null;
+            frmLoading();
 
-            }
-
-            fCoffee = new frmCoffee();
-            fCoffee.Show();
         }
 
+        #region event 예제
+
         frmCoffee fCoffee;
+
+        private void frmLoading()
+        {
+
+            if (fCoffee != null)
+            {
+                fCoffee.Dispose(); //form을 해제
+                fCoffee = null;
+            }
+            fCoffee = new frmCoffee();  // form을 생성하고
+            fCoffee.eventdelCoffeeComplete += FCoffee_eventdelCoffeeComplete;
+            fCoffee.Show();  // form을 열고
+
+            fCoffee.fCoffeeCheck();
+        }
+
+        private int FCoffee_eventdelCoffeeComplete(string strResult, int iTime)
+        {
+            return 0;
+        }
+        #endregion
 
         #region Function
         /// <summary>
